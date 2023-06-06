@@ -1,6 +1,6 @@
-import MainContent from './ui/MainContent/MainContent'
-import SideLeft from './ui/SideLeft/SideLeft'
-import SideRight from './ui/SideRight/SideRight'
+import MainContent from './MainContent/MainContent'
+import SideLeft from './SideLeft/SideLeft'
+import SideRight from './SideRight/SideRight'
 
 const App = () => {
 	return (

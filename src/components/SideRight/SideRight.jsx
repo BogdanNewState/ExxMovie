@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 
-import { getData } from '../../../data'
+import { getData } from '../../data'
 
 const SideRight = () => {
 	const [movie, setMovie] = useState([])
