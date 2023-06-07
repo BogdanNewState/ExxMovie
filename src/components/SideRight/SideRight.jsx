@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 
-import { getData } from '../../data'
+import { getMovie } from '../../data.js'
+import ModalSearch from '../ui/ModalSearch/ModalSearch.jsx'
 
 const SideRight = () => {
 	const [movie, setMovie] = useState([])
 	const [search, setSearch] = useState('')
+	const [modalOpen, setModalOpen] = useState(false)
 
 	const getMovies = async () => {
 		try {
-			const res = await getData()
+			const res = await getMovie()
 			setMovie(res)
 		} catch (error) {
 			console.log(error.message)
@@ -26,6 +28,10 @@ const SideRight = () => {
 		return moviePopularity
 	}
 
+	const openModal = () => {
+		setModalOpen(true)
+	}
+
 	useEffect(() => {
 		getMovies()
 	}, [])
@@ -36,7 +42,7 @@ const SideRight = () => {
 
 	return (
 		<div className='p-8 w-88 flex flex-col gap-9'>
-			<div className='flex items-center gap-2 p-2 border border-gray-400 rounded-2xl'>
+			<div className='flex items-center gap-2 p-2 border border-gray-400 rounded-2xl relative'>
 				<BsSearch color='gray' size={24} />
 				<input
 					className='outline-none w-full text-lg'
@@ -44,21 +50,17 @@ const SideRight = () => {
 					placeholder='Search'
 					value={search}
 					onChange={searchMovie}
+					onClick={openModal}
 				/>
+				{modalOpen ? (
+					<ModalSearch
+						search={search}
+						movie={movie}
+						open={openModal}
+						setOpen={setModalOpen}
+					/>
+				) : null}
 			</div>
-			<ul>
-				{search
-					? movie
-							.filter(item =>
-								item.title.toLowerCase().includes(search.toLowerCase())
-							)
-							.map(item => (
-								<li key={item.id}>
-									<h1>{item.title}</h1>
-								</li>
-							))
-					: null}
-			</ul>
 			<div className='flex flex-col gap-4'>
 				<h4 className='text-xl  text-gray-600'>Popular Movies</h4>
 				<ul className='flex flex-col gap-2'>
